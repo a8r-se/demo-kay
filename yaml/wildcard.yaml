@@ -1,0 +1,26 @@
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: keycloak
+spec:
+  hostname: "keycloak.kjames.k736.net"
+  prefix: /auth/
+  rewrite: /auth/
+  service: keycloak:8080
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Host
+metadata:
+  name: keycloak-host
+spec:
+  acmeProvider:
+    email: marekojames@datawire.io
+  hostname: "keycloak.kjames.k736.net"
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Host
+metadata:
+  name: wildcard
+spec:
+  hostname: "*"

@@ -1,0 +1,64 @@
+---
+# Basic OAuth filter
+apiVersion: getambassador.io/v3alpha1
+kind: Filter
+metadata:
+  name: keycloak-filter-quote
+  namespace: demo
+spec:
+  OAuth2:
+    authorizationURL: https://keycloak.kjames.k736.net/auth/realms/ambassador
+    audience: ambassador
+    clientID: ambassador
+    secret: KMT9LBIQL8YDNsqdeBN5iD6W1hzWxzda
+    injectRequestHeaders:
+    - name: "x-token-name"
+      value: "{{ .token.Claims.name }}"
+    protectedOrigins:
+    - origin: https://demo.kjames.k736.net
+      includeSubdomains: true
+
+---
+# Filter for parsing a JWT access token
+apiVersion: getambassador.io/v3alpha1
+kind: Filter
+metadata:
+  name: keycloak-jwt-filter-quote
+  namespace: demo
+spec:
+  JWT:
+    injectRequestHeaders:
+    - name: "x-token-name"
+      value: "{{ .token.Claims.name }}"
+    issuer: https://demo.kjames.k736.net/auth/realms/ambassador
+    jwksURI: https://demo.kjames.k736.net/auth/realms/ambassador/protocol/openid-connect/certs
+
+# ---
+# # This filter connects to a service that takes the token in the Authorization header and makes a request to the id-token endpoint
+# # Full installation details and source code at https://github.com/cakuros/ambassador-external-filter-userinfo
+# apiVersion: getambassador.io/v2
+# kind: Filter
+# metadata:
+#   name: external-filter-userinfo
+# spec:
+#   External:
+#     auth_service: external-filter
+#     allowed_authorization_headers:
+#       - "x-userinfo-name"
+
+---
+apiVersion: getambassador.io/v3alpha1
+kind: FilterPolicy
+metadata:
+  name: filter-policy
+  namespace: demo
+spec:
+  rules:
+    - host: "demo.kjames.k736.net"
+      path: "*"
+      filters:
+        - name: keycloak-jwt-filter-quote
+          onAllow: "break" # This onAllow/onDeny behavior allows for the fallthrough behavior such that a valid JWT will ignore the remaining filters after this one
+          onDeny: "continue"
+        - name: keycloak-filter-quote
+        # - name: external-filter-userinfo

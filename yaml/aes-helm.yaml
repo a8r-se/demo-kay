@@ -1,0 +1,57 @@
+# AES Specific
+licenseKey:
+  createSecret: true
+authService:
+  optional_configurations:
+    status_on_error:
+      code: 403
+
+emissary-ingress:
+  # image:
+  #   tag: 2.0.4
+  replicaCount: 1
+  envRaw: |
+    - name: REDIS_URL
+      value: "edge-stack-redis:6379"
+    - name: AES_LOG_LEVEL
+      value: "trace"
+    - name: POLL_EVERY_SECS
+      value: "60"
+    - name: AMBASSADOR_ENVOY_BASE_ID
+      value: "4"
+    - name: AMBASSADOR_ENVOY_API_VERSION
+      value: "V3"
+    - name: AES_RATELIMIT_PREVIEW
+      value: "true"
+  service:
+    annotations:
+      a8r.io/bugs: https://github.com/a8r-se/se-reference/issues
+      a8r.io/chat: https://github.com/a8r-se/se-reference/issues
+      a8r.io/dependencies: edge-stack-redis.ambassador, edge-stack-agent.ambassador
+      a8r.io/documentation: https://github.com/a8r-se/se-reference
+      a8r.io/incidents: https://github.com/a8r-se/se-reference/issues
+      a8r.io/logs: https://github.com/a8r-se/se-reference/issues
+      a8r.io/owner: "@cakuros"
+      a8r.io/performance: https://github.com/a8r-se/se-reference/issues
+      a8r.io/repository: https://github.com/a8r-se/se-reference
+      a8r.io/runbook: https://github.com/a8r-se/se-reference/issues
+      a8r.io/support: https://github.com/a8r-se/se-reference/issues
+      a8r.io/uptime: https://github.com/a8r-se/se-reference/issues
+  adminService:
+    create: true
+    type: NodePort
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 600Mi
+    requests:
+      cpu: 200m
+      memory: 300Mi
+  resolvers:
+    endpoint:
+      create: true
+      name: endpoint
+  agent:
+    enabled: true
+    cloudConnectToken: ""
+    rpcAddress: "https://app.getambassador.io/"

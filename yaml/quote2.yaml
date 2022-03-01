@@ -1,0 +1,20 @@
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Host
+metadata:
+  name: example-host
+  namespace: demo
+spec:
+  acmeProvider:
+    email: marekojames@datawire.io
+  hostname: "demo.kjames.k736.net"
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: quote-backend
+  namespace: demo
+spec:
+  hostname: "demo.kjames.k736.net"
+  prefix: /backend/
+  service: quote.default:80

@@ -1,0 +1,42 @@
+apiVersion: getambassador.io/v3alpha1
+kind: Host
+metadata:
+  name: example-host
+  namespace: demo
+spec:
+  acmeProvider:
+    email: marekojames@datawire.io
+  hostname: "demo.kjames.k736.net"
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: quote-backend
+  namespace: demo
+spec:
+  hostname: "demo.kjames.k736.net"
+  prefix: /backend/
+  service: quote.default:80
+
+  ## Below is for Rate Limiting
+  labels:
+    ambassador:
+    - header_request_label:
+      - request_headers:
+          header_name: "x-token-name" # In pattern matching, they key queried will be "headerkey" and the value queried will be the value of "x-token-name" header
+          key: headerkey
+---
+apiVersion: getambassador.io/v3alpha1
+kind: RateLimit
+metadata:
+  name: token-name-rate-limit
+  namespace: demo
+spec:
+  domain: ambassador
+  limits:
+  - name: token-name-per-minute
+    action: Enforce
+    pattern:
+    - headerkey: "" # Each unique header value of "x-token-name" will be tracked individually
+    rate: 3
+    unit: "minute" # Per-minute tracking is useful for debugging
