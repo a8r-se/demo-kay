@@ -10,9 +10,26 @@ spec:
   hostname: demo.kjames.k736.net
   labels:
     ambassador:
-    - header_request_label:
-      - request_headers:
-          header_name: x-token-name
-          key: headerkey
+    - group_by:
+      - generic_key:
+          value: quote-backend
+      - remote_address:
+          key: remote_address
   prefix: /backend/
   service: quote.default:80
+---
+apiVersion: getambassador.io/v3alpha1
+kind: RateLimit
+metadata:
+  name: rate-limit-for-quote-backend
+  namespace: demo
+spec:
+  domain: ambassador
+  limits:
+  - action: Enforce
+    pattern:
+    - generic_key: quote-backend
+    - remote_address: "*"
+    rate: 50
+    unit: minute
+    burstFactor: 1
