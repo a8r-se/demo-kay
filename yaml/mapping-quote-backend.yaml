@@ -2,6 +2,8 @@ apiVersion: getambassador.io/v3alpha1
 kind: Mapping
 metadata:
   annotations: {}
+  labels:
+    argocd.argoproj.io/instance: ac-quote-default
   name: quote-backend
   namespace: demo
 spec:
@@ -14,5 +16,5 @@ spec:
       - request_headers:
           header_name: x-token-name
           key: headerkey
-  prefix: /backend/
+  prefix: /backend/hello/
   service: quote.default:80
