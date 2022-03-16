@@ -10,12 +10,12 @@ spec:
     authorizationURL: https://keycloak.kjames.k736.net/auth/realms/ambassador
     audience: ambassador
     clientID: ambassador
-    secret: KMT9LBIQL8YDNsqdeBN5iD6W1hzWxzda
+    secret: zyrvT4jZBQjxeKB3EsqU8NpIWOC8T5Ax
     injectRequestHeaders:
     - name: "x-token-name"
       value: "{{ .token.Claims.name }}"
     protectedOrigins:
-    - origin: https://demo.kjames.k736.net
+    - origin: http://demo.kjames.k736.net
       includeSubdomains: true
 
 ---
