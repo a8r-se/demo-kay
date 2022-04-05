@@ -1,0 +1,35 @@
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  annotations: {}
+  name: quote-backend
+  namespace: demo
+spec:
+  ambassador_id:
+  - default
+  hostname: demo.kjames.k736.net
+  labels:
+    ambassador:
+    - group_by:
+      - generic_key:
+          value: quote-backend
+      - remote_address:
+          key: remote_address
+  prefix: /backend/hello/
+  service: quote.default:80
+---
+apiVersion: getambassador.io/v3alpha1
+kind: RateLimit
+metadata:
+  name: rate-limit-for-quote-backend
+  namespace: demo
+spec:
+  domain: ambassador
+  limits:
+  - action: Enforce
+    pattern:
+    - generic_key: quote-backend
+    - remote_address: "*"
+    rate: 50
+    unit: minute
+    burstFactor: 1
