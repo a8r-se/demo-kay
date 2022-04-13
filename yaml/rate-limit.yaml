@@ -38,5 +38,14 @@ spec:
     action: Enforce
     pattern:
     - headerkey: "" # Each unique header value of "x-token-name" will be tracked individually
-    rate: 3
+    rate: 2
     unit: "minute" # Per-minute tracking is useful for debugging
+- name: token-name-per-minute
+    action: Enforce
+    pattern:
+    - headerkey: "Emma" # Each unique header value of "x-token-name" will be tracked individually
+    rate: 5
+    unit: "minute" # Per-minute tracking is useful for debugging
+
+
+      

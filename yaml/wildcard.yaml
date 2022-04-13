@@ -6,7 +6,6 @@ metadata:
 spec:
   hostname: "keycloak.kjames.k736.net"
   prefix: /auth/
-  rewrite: /auth/
   service: keycloak:8080
 ---
 apiVersion: getambassador.io/v3alpha1

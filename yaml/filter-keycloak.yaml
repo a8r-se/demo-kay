@@ -10,7 +10,7 @@ spec:
     authorizationURL: https://keycloak.kjames.k736.net/auth/realms/ambassador
     audience: ambassador
     clientID: ambassador
-    secret: zyrvT4jZBQjxeKB3EsqU8NpIWOC8T5Ax
+    secret: TXXWWx3HpRFirFkOIctmwG9F2FIFeAP8
     injectRequestHeaders:
     - name: "x-token-name"
       value: "{{ .token.Claims.name }}"
@@ -62,3 +62,4 @@ spec:
           onDeny: "continue"
         - name: keycloak-filter-quote
         # - name: external-filter-userinfo
+    

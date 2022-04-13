@@ -6,6 +6,5 @@ metadata:
   namespace: demo
 spec:
   hostname: "*"
-  # hostname: ""
   prefix: /backend/
   service: quote.default:80
