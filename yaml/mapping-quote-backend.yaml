@@ -1,0 +1,12 @@
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  annotations: {}
+  name: quote-backend
+  namespace: demo
+spec:
+  ambassador_id:
+  - default
+  hostname: "*"
+  prefix: /backend/hello/
+  service: quote.default:80
