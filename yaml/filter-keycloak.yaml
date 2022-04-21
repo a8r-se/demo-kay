@@ -7,10 +7,10 @@ metadata:
   namespace: demo
 spec:
   OAuth2:
-    authorizationURL: https://keycloak.kjames.k736.net/auth/realms/ambassador
+    authorizationURL: https://keycloak.kjames.k736.net/realms/ambassador
     audience: ambassador
     clientID: ambassador
-    secret: TXXWWx3HpRFirFkOIctmwG9F2FIFeAP8
+    secret: 3DfnPxHXIppEuigKUcZ81YZTRhimd3L2
     injectRequestHeaders:
     - name: "x-token-name"
       value: "{{ .token.Claims.name }}"
@@ -30,8 +30,8 @@ spec:
     injectRequestHeaders:
     - name: "x-token-name"
       value: "{{ .token.Claims.name }}"
-    issuer: https://demo.kjames.k736.net/auth/realms/ambassador
-    jwksURI: https://demo.kjames.k736.net/auth/realms/ambassador/protocol/openid-connect/certs
+    issuer: https://demo.kjames.k736.net/realms/ambassador
+    jwksURI: https://demo.kjames.k736.net/realms/ambassador/protocol/openid-connect/certs
 
 # ---
 # # This filter connects to a service that takes the token in the Authorization header and makes a request to the id-token endpoint
