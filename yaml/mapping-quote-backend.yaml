@@ -1,0 +1,17 @@
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: quote-backend
+  namespace: demo
+  labels: null
+  annotations: {}
+spec:
+  ambassador_id:
+  - default
+  hostname: demo.kjames.k736.net
+  prefix: /backend/hello/
+  service: quote.default:80
+  retry_policy:
+    retry_on: 5xx
+    num_retries: 1
+    per_try_timeout: 150ms
