@@ -33,14 +33,4 @@ spec:
     targetPort: 80
   selector:
     app: frontend
----
----
-apiVersion: getambassador.io/v3alpha1
-kind: Mapping
-metadata:
-  name: quote-frontend
-  namespace: demo
-spec:
-  hostname: "*"
-  prefix: /home/
-  service: quotefrontend.default:80
+
