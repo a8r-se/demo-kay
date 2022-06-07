@@ -1,0 +1,12 @@
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: web-mapping
+spec:
+  hostname: "demo.kjames.k736.net"
+  prefix: /
+  service: quotefrontend
+  cors:
+    origins: 
+    - "http://demo.kjames.k736.net"
