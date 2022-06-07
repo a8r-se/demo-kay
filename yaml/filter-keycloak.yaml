@@ -10,7 +10,7 @@ spec:
     authorizationURL: https://keycloak.kjames.k736.net/realms/ambassador
     audience: ambassador
     clientID: ambassador
-    secret: 3DfnPxHXIppEuigKUcZ81YZTRhimd3L2
+    secret: DHCGwyicf6xU3cqvWbL5GcOb3lMibk4O
     injectRequestHeaders:
     - name: "x-token-name"
       value: "{{ .token.Claims.name }}"

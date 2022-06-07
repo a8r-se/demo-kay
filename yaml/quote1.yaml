@@ -2,9 +2,9 @@
 apiVersion: getambassador.io/v3alpha1
 kind: Mapping
 metadata:
-  name: quote-backend
+  name: quote-backend1
   namespace: demo
 spec:
   hostname: "*"
-  prefix: /backend/
+  prefix: /backend-test/
   service: quote.default:80
