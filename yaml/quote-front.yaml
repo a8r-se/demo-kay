@@ -26,6 +26,20 @@ kind: Service
 apiVersion: v1
 metadata:
   name: quotefrontend
+  annotations:
+    a8r.io/description: "React frontend for the Quote Demo"
+    a8r.io/owner: "kayjames@datawire.io"
+    a8r.io/chat: "Slack channel, or external link to chat"
+    a8r.io/bugs: "https://github.com/a8r-se/demo-kay.git/issues"
+    a8r.io/logs: "Link to external log viewer"
+    a8r.io/documentation: "Link to external project docs"
+    a8r.io/repository: "https://github.com/a8r-se/demo-kay.git"
+    a8r.io/support: "Link to external support center"
+    a8r.io/runbook: "https://www.getambassador.io/docs/latest/topics/running/debugging/"
+    a8r.io/incidents: "https://www.getambassador.io/docs/cloud/latest/service-catalog/concepts/ir/#incident-response-in-the-cloud-native-world"
+    a8r.io/uptime: "Link to external uptime dashboard"
+    a8r.io/performance: "Link to external perf monitoring"
+    a8r.io/dependencies: "quote.default"
 spec:
   ports:
   - name: http
