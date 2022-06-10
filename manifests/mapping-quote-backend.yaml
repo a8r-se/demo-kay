@@ -1,0 +1,13 @@
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: quote-backend
+  namespace: demo
+  labels: null
+  annotations: {}
+spec:
+  ambassador_id:
+  - default
+  hostname: demo.kjames.k736.net
+  prefix: /backend/
+  service: quote.default:80
