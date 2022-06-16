@@ -16,5 +16,5 @@ runs:
     - name: "Run voting service"
       shell: bash
       run: |
-        make local
-        GRPC_PORT=8081 go run emojivoto-voting-svc/cmd/server.go 1>/dev/null 2>/dev/null &
+        make -C /emojivoto
+        GRPC_PORT=8081 go run emojivoto/emojivoto-voting-svc/cmd/server.go 1>/dev/null 2>/dev/null &
