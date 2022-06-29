@@ -11,3 +11,7 @@ k8s_config:
   cluster_info:
     cluster_id: 37caa869-8e68-52a5-af6b-fe3b96c517f3
     cluster_name: Quote Demo cluster
+- manifest_path: /yaml
+  cluster_info:
+    cluster_id: 37caa869-8e68-52a5-af6b-fe3b96c517f3
+    cluster_name: Quote Demo cluster
