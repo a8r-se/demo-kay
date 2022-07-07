@@ -59,7 +59,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: docker.io/datawire/quote:0.5.0
+        image: docker.io/marekojames5298/quote:1.0
         ports:
         - name: http
           containerPort: 8080
