@@ -17,7 +17,8 @@ spec:
   hostname: "demo.kjames.k736.net"
   prefix: /backend/
   service: quote.default:80
-
+  docs:
+    path: "/.ambassador-internal/openapi-docs"
   ## Below is for Rate Limiting
   labels:
     ambassador:

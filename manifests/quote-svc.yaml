@@ -16,7 +16,7 @@ metadata:
         a8r.io/dependencies: "None"
         ### ArgoRollOuts Annotations
         a8r.io/rollouts.scm.branch: "main"
-        a8r.io/rollouts.scm.path: "/yaml"
+        a8r.io/rollouts.scm.path: "/manifests"
         a8r.io/rollouts.image-repo.type: "dockerhub"
         a8r.io/rollouts.image-repo.name: "marekojames5298/quote-demo"
         a8r.io/rollouts.deployment: "quote"
@@ -28,3 +28,38 @@ spec:
     targetPort: 8080
   selector:
     app: quote
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quote-canary
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  selector:
+    app: quote
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quote
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quote
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: quote
+    spec:
+      containers:
+      - name: backend
+        image: docker.io/datawire/quote:0.5.0
+        ports:
+        - name: http
+          containerPort: 8080

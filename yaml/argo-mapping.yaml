@@ -1,0 +1,31 @@
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: argo
+  namespace: argocd
+spec:
+  hostname: "argocd.kjames.k736.net"
+  prefix: /
+  service: argo-cd-1656352505-argocd-server:443
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: argocd-server-cli
+  namespace: argocd
+spec:
+  # NOTE: the port must be ignored if you have strip_matching_host_port enabled on envoy
+  host: argocd.example.com:443
+  prefix: /
+  service: argo-cd-1656352505-argocd-server:80
+  regex_headers:
+    Content-Type: "^application/grpc.*$"
+  grpc: true
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Host
+metadata:
+  name: argocd-host
+spec:
+  hostname: "argocd.kjames.k736.net"
