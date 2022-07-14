@@ -12,11 +12,11 @@ spec:
 apiVersion: getambassador.io/v3alpha1
 kind: Mapping
 metadata:
-  name: quote-backend
+  name: quote-api
   namespace: demo
 spec:
   hostname: "demo.kjames.k736.net"
-  prefix: /backend/
+  prefix: /quote/
   service: quote.default:80
   docs:
     path: "/.ambassador-internal/openapi-docs"

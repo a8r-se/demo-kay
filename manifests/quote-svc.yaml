@@ -59,7 +59,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: docker.io/marekojames5298/quote-demo:0.0.1
+        image: docker.io/marekojames5298/quote-demo:latest
         ports:
         - name: http
           containerPort: 8080
