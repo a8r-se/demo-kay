@@ -1,0 +1,31 @@
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: web-svc-mapping-1659368619489
+  namespace: emojivoto
+spec:
+  service: web-svc.emojivoto:80
+  timeout_ms: 3000
+  connect_timeout_ms: 3000
+  retry_policy:
+    retry_on: 5xx
+    num_retries: 1
+    per_try_timeout: 0.150s
+  hostname: "*"
+  prefix: /backend/
+---
+apiVersion: getambassador.io/v3alpha1
+kind: RateLimit
+metadata:
+  name: rate-limit-for-web-svc-mapping-1659368619489
+  namespace: emojivoto
+spec:
+  domain: ambassador
+  limits:
+  - action: Enforce
+    pattern:
+    - generic_key: web-svc-mapping-1659368619489
+    - remote_address: "*"
+    rate: 50
+    unit: minute
+    burstFactor: 1
