@@ -1,0 +1,21 @@
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: quote-backend
+  namespace: demo
+  labels: null
+  annotations: {}
+spec:
+  ambassador_id:
+  - default
+  docs:
+    path: /.ambassador-internal/openapi-docs
+  hostname: demo.kjames.k736.net
+  labels:
+    ambassador:
+    - header_request_label:
+      - request_headers:
+          header_name: x-token-name
+          key: headerkey
+  prefix: /backend/
+  service: quote.default:80
