@@ -3,4 +3,7 @@ k8s_config:
   cluster_info:
     cluster_id: 37caa869-8e68-52a5-af6b-fe3b96c517f3
     cluster_name: Quote Demo cluster
-
+- manifest_path: /manifests
+  cluster_info:
+    cluster_id: c5d556f6-e42d-5167-9b4f-a93d48ae5a7a
+    cluster_name: Kay's Demo cluster
