@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/marekojames/Documents/demos/AES-demo'
+make: Leaving directory `/Users/marekojames/Documents/demos/AES-demo'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+

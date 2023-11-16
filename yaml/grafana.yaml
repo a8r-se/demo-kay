@@ -1,0 +1,74 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: grafana
+  labels:
+    app: grafana
+    component: core
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+      component: core
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: grafana
+        component: core
+      annotations:
+        sidecar.istio.io/inject: 'false'
+    spec:
+      volumes:
+        - name: data
+          emptyDir: {}
+      containers:
+        - name: grafana
+          image: 'grafana/grafana:9.1.7'
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          env:
+            - name: GF_SERVER_ROOT_URL
+              value: https://demo1.kjames.k736.net/grafana
+            - name: GRAFANA_PORT
+              value: '3000'
+            - name: GF_AUTH_BASIC_ENABLED
+              value: 'false'
+            - name: GF_AUTH_ANONYMOUS_ENABLED
+              value: 'true'
+            - name: GF_AUTH_ANONYMOUS_ORG_ROLE
+              value: Admin
+            - name: GF_PATHS_DATA
+              value: /data/grafana
+          resources:
+            requests:
+              cpu: 10m
+          volumeMounts:
+            - name: data
+              mountPath: /data/grafana
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+              scheme: HTTP
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+spec:
+  ports:
+    - port: 80
+      targetPort: 3000
+  selector:
+    app: grafana
+    component: core

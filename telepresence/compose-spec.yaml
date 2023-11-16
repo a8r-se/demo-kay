@@ -1,0 +1,79 @@
+name: web-compose-demo
+connection:
+  context: kubecon-kluster2
+  namespace: emojivoto
+workloads:
+  - name: web
+    namespace: emojivoto
+    intercepts:
+      - handler: web-compose-handler
+        localPort: 8080 # Port exposed on the handler
+        port: 80 # Port of the Service in the cluster being intercepted
+        headers:
+          - name: x-dev-id
+            value: "kjames"
+handlers:
+  - name: web-compose-handler
+    environment:
+      - name: WEB_PORT
+        value: "8080"
+      - name: EMOJISVC_HOST
+        value: "emoji:8080"
+      - name: VOTINGSVC_HOST
+        value: "voting:8080"
+      - name: INDEX_BUNDLE
+        value: "dist/index_bundle.js"
+    docker:
+      compose:
+        services:
+          - name: web
+            behavior: interceptHandler
+            mapping:
+              name: web
+              namespace: emojivoto
+          - name: emoji
+            behavior: remote
+            mapping:
+              name: emoji
+              namespace: emojivoto
+          - name: voting
+            behavior: local
+            mapping:
+              name: voting
+              namespace: emojivoto
+          - name: vote-bot
+            behavior: remote
+        spec:
+          version: '3'
+          services:
+            web:
+              image: docker.io/caseykurosawa/emojivoto-web:v13-rc0
+              environment:
+                - WEB_PORT=8080
+                - EMOJISVC_HOST=emoji:8080
+                - VOTINGSVC_HOST=voting:8080
+                - INDEX_BUNDLE=dist/index_bundle.js
+              ports:
+                - "8080:8080"
+              depends_on:
+                - voting
+                - emoji
+            vote-bot:
+              image: buoyantio/emojivoto-web:v11
+              entrypoint: emojivoto-vote-bot
+              environment:
+                - WEB_HOST=web:8080
+              depends_on:
+                - web
+            emoji:
+              image: buoyantio/emojivoto-emoji-svc:v11
+              environment:
+                - GRPC_PORT=8080
+              ports:
+                - "8081:8080"
+            voting:
+              image: buoyantio/emojivoto-voting-svc:v11
+              environment:
+                - GRPC_PORT=8080
+              ports:
+                - "8082:8080"

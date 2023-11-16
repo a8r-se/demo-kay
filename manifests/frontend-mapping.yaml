@@ -4,9 +4,9 @@ kind: Mapping
 metadata:
   name: web-mapping
 spec:
-  hostname: "demo.kjames.k736.net"
+  hostname: "demo1.kjames.k736.net"
   prefix: /
   service: quotefrontend
   cors:
     origins: 
-    - "http://demo.kjames.k736.net"
+    - "http://demo1.kjames.k736.net"

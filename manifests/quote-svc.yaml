@@ -18,21 +18,9 @@ metadata:
         a8r.io/rollouts.scm.branch: "main"
         a8r.io/rollouts.scm.path: "/manifests"
         a8r.io/rollouts.image-repo.type: "dockerhub"
-        a8r.io/rollouts.image-repo.name: "marekojames5298/quote-demo"
+        a8r.io/rollouts.image-repo.name: "marekojames5298/openapi-test"
         a8r.io/rollouts.deployment: "quote"
         a8r.io/rollouts.mappings: "quote-backend"
-spec:
-  ports:
-  - name: http
-    port: 80
-    targetPort: 8080
-  selector:
-    app: quote
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: quote-canary
 spec:
   ports:
   - name: http

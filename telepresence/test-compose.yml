@@ -1,0 +1,25 @@
+services:
+  lineten.marketplaceadapter.api:
+    image: ${DOCKER_REGISTRY-}lineten.marketplaceadapter.api
+    build:
+      context: src
+      dockerfile: LineTen.MarketplaceAdapter.Api/Dockerfile
+      args:
+        FEED_URL: ${FEED_URL}
+        PAT: ${PAT}
+    depends_on:
+      - mssql-db
+      - azurite
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+    networks:
+      - lineten.marketplaceadapter-net
+
+
+networks:
+  lineten.marketplaceadapter-net:
+    driver: bridge
+

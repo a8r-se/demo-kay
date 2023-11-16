@@ -2,9 +2,28 @@
 apiVersion: getambassador.io/v3alpha1
 kind: Mapping
 metadata:
-  name: quote-backend1
-  namespace: demo
+  name: quote-backend
 spec:
-  hostname: "*"
-  prefix: /backend-test/
-  service: quote.default:80
+  hostname: "kubecon-demo.kjames.k736.net"
+  prefix: /other/
+  service: http://34.134.219.159
+  docs:
+    path: "/.ambassador-internal/openapi-docs"
+    labels:
+    ambassador:
+    - label_group:
+      - generic_key:
+          value: test-limit
+---
+apiVersion: getambassador.io/v3alpha1
+kind: RateLimit
+metadata:
+  name: default-rate-limit
+spec:
+  domain: ambassador
+  limits:
+  - pattern:
+    - generic_key: "test-limit"
+    rate: 3
+    unit: minute
+    burstFactor: 3

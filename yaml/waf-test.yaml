@@ -1,0 +1,38 @@
+---
+apiVersion: gateway.getambassador.io/v1alpha1
+kind: WebApplicationFirewall
+metadata:
+  name: ambassador-waf
+  namespace: ambassador
+spec:
+  firewallRules:
+    - sourceType: "http"
+      http:
+        url: "https://app.getambassador.io/download/waf/v1-20230825/aes-waf.conf"
+    - sourceType: "http"
+      http:
+        url: "https://app.getambassador.io/download/waf/v1-20230825/crs-setup.conf"
+    - sourceType: "http"
+      http:
+        url: "https://app.getambassador.io/download/waf/v1-20230825/waf-rules.conf"
+    - sourceType: configmap
+      configMapRef:
+        name: custom-map
+        namespace: ambassador
+        key: custom.conf
+  logging:                        # optional
+    onInterrupt:                  # required
+      enabled: true              # required
+---
+apiVersion: gateway.getambassador.io/v1alpha1
+kind: WebApplicationFirewallPolicy
+metadata:
+  name: ambassador-waf-policy
+  namespace: ambassador
+spec:
+  rules:
+    - host: "*"
+      path: "*"
+      wafRef:
+        name: ambassador-waf
+        namespace: ambassador

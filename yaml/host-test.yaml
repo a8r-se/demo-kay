@@ -1,0 +1,17 @@
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Host
+metadata:
+  name: wildcard
+spec:
+  hostname: "*"
+---
+apiVersion: getambassador.io/v3alpha1
+kind: Host
+metadata:
+  name: demo-host
+spec:
+  hostname: "demo1.kjames.k736.net"
+  acmeProvider:
+    email: marekojames@datawire.io
+

@@ -1,0 +1,21 @@
+connection:
+  context: "kubecon-kluster2"
+prerequisites: []
+workloads:
+  - name: web
+    namespace: emojivoto
+    intercepts:
+      - handler: web-handler
+        headers:
+          - name: telepresence-header
+            value: "{{ .Telepresence.Username }}"
+        port: 80
+        localPort: 8080
+        mountPoint: "false"
+handlers:
+  - name: web-handler
+    docker:
+      image: caseykurosawa/emojivoto-web:v13-rc0
+    environment:
+      - name: PORT
+        value: "8080"

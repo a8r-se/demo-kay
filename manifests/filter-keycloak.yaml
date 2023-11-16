@@ -7,15 +7,15 @@ metadata:
   namespace: demo
 spec:
   OAuth2:
-    authorizationURL: https://keycloak.kjames.k736.net/realms/ambassador
+    authorizationURL: https://keycloak1.kjames.k736.net/realms/ambassador
     audience: ambassador
     clientID: ambassador
-    secret: F0IP9NxQTcIbkyatmmkU0ZXg2L2BvLJH
+    secret: TjNh5m6SgziCXVjh15cOUFPgRr7KALxJ
     injectRequestHeaders:
     - name: "x-token-name"
       value: "{{ .token.Claims.name }}"
     protectedOrigins:
-    - origin: http://demo.kjames.k736.net
+    - origin: http://demo1.kjames.k736.net
       includeSubdomains: true
 
 ---
@@ -30,8 +30,21 @@ spec:
     injectRequestHeaders:
     - name: "x-token-name"
       value: "{{ .token.Claims.name }}"
-    issuer: https://demo.kjames.k736.net/realms/ambassador
-    jwksURI: https://demo.kjames.k736.net/realms/ambassador/protocol/openid-connect/certs
+    issuer: https://demo1.kjames.k736.net/realms/ambassador
+    jwksURI: https://demo1.kjames.k736.net/realms/ambassador/protocol/openid-connect/certs
+
+#---
+#apiVersion: getambassador.io/v3alpha1
+#kind: Filter
+#metadata:
+#  name: "example-apikeys-filter"
+#  namespace: "example-namespace"
+#spec:
+#  APIKey:
+#    httpHeader: "x-my-api-key-header" # optional; default is X-API-Key
+#    keys:
+#      - secretName: "my-secret-api-keys"
+#
 
 # ---
 # # This filter connects to a service that takes the token in the Authorization header and makes a request to the id-token endpoint
@@ -54,12 +67,12 @@ metadata:
   namespace: demo
 spec:
   rules:
-    - host: "demo.kjames.k736.net"
+    - host: "demo1.kjames.k736.net"
       path: "*"
       filters:
         - name: keycloak-jwt-filter-quote
           onAllow: "break" # This onAllow/onDeny behavior allows for the fallthrough behavior such that a valid JWT will ignore the remaining filters after this one
           onDeny: "continue"
         - name: keycloak-filter-quote
-        # - name: external-filter-userinfo
+        #- name: external-filter-userinfo
     
