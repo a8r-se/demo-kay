@@ -28,21 +28,4 @@ spec:
   hostname: "demo1.kjames.k736.net"
   prefix: "/quote/"
   service: quote.default
-  labels:
-    ambassador:
-    - label_group:
-      - generic_key:
-          value: test-limit
----
-apiVersion: getambassador.io/v3alpha1
-kind: RateLimit
-metadata:
-  name: default-rate-limit
-spec:
-  domain: ambassador
-  limits:
-  - pattern:
-    - generic_key: "test-limit"
-    rate: 3
-    unit: minute
-    burstFactor: 3
+
