@@ -1,0 +1,13 @@
+apiVersion: getambassador.io/v3alpha1
+kind: Mapping
+metadata:
+  name: quote-api
+  namespace: default
+  labels: null
+  annotations: {}
+spec:
+  ambassador_id:
+  - default
+  hostname: demo1.kjames.k736.net
+  prefix: /quote/
+  service: quote.default
